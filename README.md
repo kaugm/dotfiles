@@ -1,5 +1,8 @@
 # dotfiles
 linux dotfiles
 
+To restore:
 
-To restore: git clone repository and run cd dotfiles && ./backup restore
+https://github.com/kaugm/dotfiles
+cd dotfiles
+./backup restore
