@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# going to paste this into .bashrc for backup function
+
+# Insert file paths of files for backup
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup)
+
+BACKUPDIR=$HOME/dotfiles/
+
+backup () {
+	[[ -d $BACKUPDIR ]] || { mkdir $BACKUPDIR; notify "$BACKUPDIR created"; }
+
+	
+	for FILE in ${SOURCEPATH[@]}; do
+
+		if [ -f "$(find $BACKUPDIR -name $(basename $FILE))" ]; then
+			if [[ $(cmp $FILE $(find $BACKUPDIR -name $(basename $FILE))) ]]; then
+				cp $FILE $BACKUPDIR/$(basename $FILE)
+				notify "New version of $(basename $FILE) copied to backup"
+			else
+				notify "No changes to $(basename $FILE)"
+			fi
+		else
+				cp $FILE $BACKUPDIR$(basename $FILE)
+			notify "Initial backup of $(basename $FILE)"
+		fi
+	done
+}
+
+restore () {
+
+	[[ -d $BACKUPDIR ]] || { notify "$BACKUPDIR not found. Please git clone repository"; exit 1; }
+	FILES=($(ls -A $BACKUPDIR))
+
+	for FILE in ${SOURCEPATH[@]}; do
+		if [ ! -d $(dirname $FILE) ]; then
+			mkdir $(dirname $FILE)
+			notify "$(dirname $FILE) created"
+		fi
+		cp $(find $BACKUPDIR -name $(basename $FILE)) $FILE || { notify "Error restoring $FILE"; continue; }
+		notify "$FILE restored"
+	done
+
+}
+
+# Preferred method of notification
+notify() {
+	notify-send "$@"
+	echo "$@"
+}
+
+
+case $1 in 
+	backup) backup "$@" ;;
+	restore) restore "$@" ;;
+	*) echo "args: [ backup / restore ]" ;;
+esac
+
