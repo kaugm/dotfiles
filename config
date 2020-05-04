@@ -11,7 +11,6 @@ DestroyFunc StartFunction
 AddToFunc   StartFunction
 #+ I Test Exec exec fvwm-root ~/.fvwm/images/moon.png
 #+ I Test Exec exec feh --bg-scale ~/.fvwm/images/flowers.jpg
-+ I Wal -R
 #DestroyFunc InitFunction
 #AddToFunc InitFunction
 #+ I Exec exec xsettingsd &
