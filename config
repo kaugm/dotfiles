@@ -1,5 +1,5 @@
 ## Environment variables
-SetEnv cache $[HOME]/.fvwm/cache/
+SetEnv cache $[HOME]/.cache/fvwm
 SetEnv scripts $[HOME]/.fvwm/scripts
 SetEnv icons $[HOME]/.fvwm/icons
 

@@ -78,21 +78,39 @@ esac
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias x='exit'
+alias c='clear'
 
 # List files
 alias ls='ls --color -hF --group-directories-first'
 alias la='ls --color -A -hF --group-directories-first'
-alias lp='ls --color -Ao --group-directories-first'
+#alias lp='ls --color -Ao --group-directories-first'
+lp () {
+	ls -lAp | awk '{print $1, $9}'
+}
+lt () {
+	ls -lAp | awk '{print $6, $7, $8, $9}'
+}
 
-alias bashedit='vim ~/.bashrc'
-alias bashref='source ~/.bashrc && clear'
+mod() {
+	case $1 in
+	bash) vim ~/.bashrc 
+		  source ~/.bashrc
+		  clear ;;
+	xres) vim ~/.Xresources
+		  xrdb ~/.Xresources
+		  clear ;;
+	*) echo "[ bash / xres ]"
+	esac
+}
+
 
 # Change permissions
 allow() {
 	case $1 in
 	rw) chmod u+rw $2 ;;
-	wx) chmod u+x $2 ;;
-	*) echo "[rw / wx] [file]" ;;
+	x) chmod u+x $2 ;;
+	*) echo "[rw / x] [file]" ;;
 	esac
 }
 
@@ -129,32 +147,36 @@ extract() {
 search() {
 	case $1 in
 	file) find -name $2 ;;
-	dir) sudo find / -type d -name "$2" 2>&1 | grep -v "Permission denied\|Invalid argument" ;;
+	dir) 	c=1
+	local dir=($(find / -type d -name $2 2>&1 | grep -v "Permission denied\|Invalied argument"))
+	if [ $(find / -type d -name $2 2>&1 | grep -v "Permission denied\|Invalied argument" | wc -l) -gt 1 ]; then
+		for item in ${dir[@]}; do
+			echo "$c. $item"
+			((c++))
+		done
+		read g
+		((g--))
+		cd ${dir[g]}
+	else
+		cd ${dir}
+	fi ;;
 	history) history | grep $2 ;;
-	*) echo "search [file / dir / history] [name*]" ;;
+	proc) ps aux | grep $2 ;;
+	pkg) apt-cache search $2 ;;
+	*) echo "search [file / dir / history / proc / pkg] [name*]" ;;
 	esac
 }
 
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-alias x='exit'
-alias c='clear'
+open() {
+case $(file $1 | awk '{print $2}') in
+	ASCII|POSIX|UTF-8|Python|HTML|Bourne-Again) vim $1 ;;
+	PNG|JPG|JPEG) gpicview $1 ;;
+	*) echo "add program to open $(file $1 | awk '{print $2}') filetypes"
+esac
+}
 
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
