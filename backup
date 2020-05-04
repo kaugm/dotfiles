@@ -4,7 +4,8 @@
 # Insert file paths of files for backup
 declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup)
 
-declare -a DIRS=($HOME/.cache/fvwm)
+# Must have all directories needed in this array
+declare -a DIRS=($HOME/.cache $HOME/.cache/fvwm $HOME/.fvwm $HOME/.fvwm/scripts $HOME/.bin)
 
 BACKUPDIR=$HOME/dotfiles/
 
@@ -33,6 +34,10 @@ restore () {
 	[[ -d $BACKUPDIR ]] || { notify "$BACKUPDIR not found. Please git clone repository"; exit 1; }
 	FILES=($(ls -A $BACKUPDIR))
 
+	for DIR in ${DIRS[@]}; do
+		[[ -d $DIR ]] || { mkdir $DIR; notify "$DIR created"; }
+	done
+
 	for FILE in ${SOURCEPATH[@]}; do
 		if [ ! -d $(dirname $FILE) ]; then
 			mkdir $(dirname $FILE)
@@ -42,9 +47,7 @@ restore () {
 		notify "$FILE restored"
 	done
 
-	for DIR in ${DIRS[@]}; do
-		[[ -d $DIR ]] || { mkdir $DIR; notify "$DIR created"; }
-	done
+
 }
 
 # Preferred method of notification
