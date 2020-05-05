@@ -2,7 +2,7 @@
 # going to paste this into .bashrc for backup function
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/config_titlebar $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup)
 
 # Must have all directories needed in this array
 #declare -a DIRS=($HOME/.cache $HOME/.cache/fvwm $HOME/.fvwm $HOME/.fvwm/scripts $HOME/.bin)

@@ -221,6 +221,10 @@ MenuStyle WindowList Font "xft:Ubuntu:Bold:size=9:antialias=True"
 MenuStyle WindowList BorderWidth 0
 
 
+
+
+
+
 ## Colorsets
 # Dark mode
 Colorset 0 fg #cccccc, bg #191921, hi, sh, Plain, NoShape
@@ -232,7 +236,6 @@ Colorset 2 fg #aaaaaa, bg #191921, hi, sh, Plain, NoShape
 Colorset 3 fg #191921, bg #888888, hi, sh, Plain, NoShape
 # Testing colorset
 Colorset 4 fg #ff0000, bg #ff0000, hi, sh, Plain, NoShape
-
 
 
 
@@ -260,13 +263,10 @@ Style * !FPGrabFocusTransient, FPReleaseFocusTransient
 Style * !Icon
 
 ## Decoration Styles
-Style * !Handles
+Style * TitleAtTop, !Handles
 Style * ResizeHintOverride
-Style * BorderWidth 6, HandleWidth 0
-Style * Colorset 5, HilightColorset 6
-Style * Borders
-Style * !Title
-BorderStyle Simple -- NoInset Flat
+Style * BorderWidth 0, HandleWidth 0
+Style * Colorset 5, HilightColorset 5
 
 ## Window Specific Styles
 Style ConfirmQuit !Title, PositionPlacement Center, WindowListSkip, Layer 6
@@ -277,20 +277,20 @@ Style FvwmIdent WindowListSkip
 
 
 
-
 ## Decorations
 # Buttons Locations 1 3 5 7 9 T T T T T 0 8 6 4 2
 # 2 >> Close, 4 >> Maximize, 6 >> Minimize, 1 >> Window Menu
-#TitleStyle Centered Height 28 -- Flat
-#ButtonStyle Reset
-#ButtonStyle All -- Flat
-#ButtonStyle All -- UseTitleStyle
-#AddButtonStyle All Vector 2 1x1@4 1x1@4
+TitleStyle Centered Height 36 -- Flat
+ButtonStyle Reset
+ButtonStyle All -- Flat
+ButtonStyle All -- UseTitleStyle
+AddButtonStyle All Vector 2 1x1@4 1x1@4
 # CLOSE BUTTON ONLY
-#AddButtonStyle 2 \
+AddButtonStyle 2 \
 	ActiveUp (Pixmap $[icons]/close.png -- Flat) \
 	ActiveDown (Pixmap $[icons]/close.png -- Flat) \
 	Inactive (Pixmap $[icons]/close.png -- Flat)
+
 
 
 

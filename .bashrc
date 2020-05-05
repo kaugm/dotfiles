@@ -170,7 +170,7 @@ search() {
 open() {
 case $(file $1 | awk '{print $2}') in
 	ASCII|POSIX|UTF-8|Python|HTML|Bourne-Again) vim $1 ;;
-	PNG|JPG|JPEG) gpicview $1 ;;
+	PNG|JPG|JPEG) sxiv $1 ;;
 	*) echo "add program to open $(file $1 | awk '{print $2}') filetypes"
 esac
 }
@@ -189,4 +189,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+#Adding the path for wal [not necessary on fresh installs?]
 export PATH="$HOME/.local/bin:$PATH"
