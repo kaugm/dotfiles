@@ -175,6 +175,13 @@ case $(file $1 | awk '{print $2}') in
 esac
 }
 
+system() {
+	case $1 in
+		backup) $HOME/.bin/backup backup ;;
+		restore) $HOME/.bin/backup restore ;;
+		*) echo " [backup / restore]" ;;
+	esac
+}
 
 
 
