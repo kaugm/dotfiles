@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+## LOCATION $HOME/.fvwm/scripts
+
+[[ -d $dir ]] || { mkdir -p $dir; echo "$dir created"; }
 
 wid=$1
 if [ "$wid" == "" ]

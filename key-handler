@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+## LOCATION: $HOME/.config/sxiv/exec/
+## Allows for external event handlers for SXIV. Ctrl+x, then Ctrl+[KEY]
+
+while read file; do
+	case "$1" in
+		"C-d")
+			$HOME/.fvwm/scripts/theme set dark "$file" ;;
+		"C-l")
+			$HOME/.fvwm/scripts/theme set light "$file" ;;
+	esac
+done
+

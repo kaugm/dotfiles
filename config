@@ -1,3 +1,4 @@
+## LOCATION: $HOME/.fvwm/
 ## Environment variables
 SetEnv cache $[HOME]/.cache/fvwm
 SetEnv scripts $[HOME]/.fvwm/scripts
@@ -5,6 +6,11 @@ SetEnv icons $[HOME]/.fvwm/icons
 
 # Read in dynamic colorsets
 Read $./dyn_colors.fvwm2rc
+
+
+
+
+
 
 ## Functions
 DestroyFunc StartFunction
@@ -53,9 +59,9 @@ AddToFunc SnapHalf
 + I Maximize True 75 75
 + I Move 50-50w 50-50w
 + I Raise
-DestroyFunc SnapQuarter
-AddToFunc SnapQuarter
-+ I Maximize True 50 50
+DestroyFunc SnapSmall
+AddToFunc SnapSmall
++ I Maximize True 40 40
 + I Move 50-50w 50-50w
 + I Raise
 
@@ -85,11 +91,16 @@ AddToFunc MouseMove
 + H $0
 
 
+
+
+
+
 ## Keybindings
 # Ignore Numlock and other modifiers for bindings
 IgnoreModifiers L25
 # Launching apps
 Key D A 4 Exec rofi -show run
+Key p A 4 Exec $HOME/.bin/powermenu.sh
 Key Return A 4 Exec urxvt
 # Volume control
 #Key XF86AudioRaiseVolume A A Exec amixer -q set Master 5%+
@@ -127,12 +138,17 @@ Key Right A S4 Resize w+5 keep
 Key Up A S4 Resize keep w-5
 Key Down A S4 Resize keep w+5
 # Move to the center of the screen
-#Key a A 4 Move 50-50w 50-50w
+Key a A 4 SnapSmall
 Key c A 4 CenterWin
 # Alt-Tab functionality
 Key Tab A M WindowList Root c c CurrentDesk, NoGeometry, OnlyNormal, NoCurrentDeskTitle, CurrentAtEnd, IconifiedAtEnd
 # Launches root menu
 Key m A 4 Menu MenuFvwmRoot
+
+
+
+
+
 
 ## Mouse bindings
 # Double Click Delay

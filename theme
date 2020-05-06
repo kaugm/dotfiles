@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+## LOCATION: $HOME/.fvwm/scripts/
 
 if [ ! -f ~/.fvwm/dyn_colors.fvwm2rc ]; then
 	touch ~/.fvwm/dyn_colors.fvwm2rc

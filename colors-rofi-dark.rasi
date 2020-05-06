@@ -1,4 +1,5 @@
 * {{
+/* LOCATION: $HOME/.config/wal/templates/ */
     active-background: {color2};
     active-foreground: @foreground;
     normal-background: @background;

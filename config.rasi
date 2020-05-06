@@ -1,4 +1,5 @@
 configuration {
+/* LOCATION: $HOME/.config/rofi/ */
 /* From pywal */
 theme: "~/.cache/wal/colors-rofi-dark";
 /*	modi: "window,run,ssh";*/
@@ -21,7 +22,7 @@ theme: "~/.cache/wal/colors-rofi-dark";
 /*	run-shell-command: "{terminal} -e {cmd}";*/
 /*	window-command: "xkill -id {window}";*/
 /*	window-match-fields: "all";*/
-/*	drun-icon-theme: ;*/
+	drun-icon-theme: "Arc";
 /*	drun-match-fields: "name,generic,exec,categories";*/
 /*	disable-history: false;*/
 /*	sort: false;*/

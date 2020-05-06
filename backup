@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# going to paste this into .bashrc for backup function
+## LOCATION: $HOME/.bin/
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/sxiv/exec/key-handler)
 
 # Must have all directories needed in this array
 #declare -a DIRS=($HOME/.cache $HOME/.cache/fvwm $HOME/.fvwm $HOME/.fvwm/scripts $HOME/.bin)

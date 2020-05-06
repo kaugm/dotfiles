@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+## LOCATION: $HOME/.fvwm/scripts/
 
 wid=$1
 if [ "$wid" == "" ]
