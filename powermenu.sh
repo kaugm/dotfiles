@@ -2,21 +2,23 @@
 ## LOCATION: $HOME/.bin/
 
 ### Options ###
-power_off="Poweroff"
-reboot="Reboot"
-lock="Lock"
+poweroff="poweroff"
+reboot="reboot"
+lock="lock"
 # Variable passed to rofi
-options="$power_off\n$reboot\n$lock"
+options="$poweroff\n$reboot\n$lock"
 
 uptime=$(uptime -p | sed -e 's/up //g')
 
 chosen="$(echo -e "$options" | rofi -p "You've been working for $uptime" -dmenu -padding 500)"
 case $chosen in
-    $power_off)
-        systemctl poweroff
+    $poweroff)
+#        systemctl poweroff
+		sudo shutdown now
         ;;
     $reboot)
-        systemctl reboot
+#        systemctl reboot
+		sudo shutdown -r now
         ;;
     $lock)
         /usr/lib/xscreensaver/gluqlo -f

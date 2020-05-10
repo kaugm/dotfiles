@@ -73,7 +73,11 @@ case $1 in
 			dark) set_theme_dark "$@" ;;
 		esac
 	;;
-	*) echo "1. ./theme [download/set] [light/dark] [category/random] {image} << for [set] option only" ;;
+	copy)
+		cp /tmp/wallpaper.jpg $HOME/Pictures/$2.jpg ;;
+	*) echo "1. ./theme [download/set] [light/dark] [category/random] {image} << for [set] option only"
+	echo "2. ./theme [copy] {image_name} (no .jpg at end of filename)"
+	;;
 esac
 
 

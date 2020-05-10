@@ -17,6 +17,8 @@ DestroyFunc StartFunction
 AddToFunc   StartFunction
 #+ I Test Exec exec fvwm-root ~/.fvwm/images/moon.png
 #+ I Test Exec exec feh --bg-scale ~/.fvwm/images/flowers.jpg
++ I Exec exec wal -R
++ I feh --bg-scale $(cat $HOME/.cache/wal/wal)
 #DestroyFunc InitFunction
 #AddToFunc InitFunction
 #+ I Exec exec xsettingsd &
@@ -53,11 +55,6 @@ DestroyFunc SnapRight
 AddToFunc SnapRight
 + I Maximize True 49 100
 + I Move -0 0
-+ I Raise
-DestroyFunc SnapHalf
-AddToFunc SnapHalf
-+ I Maximize True 75 75
-+ I Move 50-50w 50-50w
 + I Raise
 DestroyFunc SnapSmall
 AddToFunc SnapSmall
@@ -202,7 +199,7 @@ DestroyMenu MenuBin
 AddToMenu   MenuBin
 + "&NEW THEME" Popup MenuTheme
 + "&EDIT CONFIG" Exec exec urxvt -e vim ~/.fvwm/config
-+ "&BACKUP" Exec exec /home/karl/backup
++ "&BACKUP" Exec exec $HOME/.bin/backup backup
 + "&COPY CONFIG TO SHARE" Exec exec urxvt -e scp ~/.fvwm/config pi@192.168.1.250:/Shared/Backup/FVWM/.fvwm/config
 + "&SSH SAMBA" Exec exec urxvt -e ssh pi@192.168.1.250
 

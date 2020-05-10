@@ -114,12 +114,13 @@ allow() {
 	esac
 }
 
-# Easy theme changing
+# Theme related commands
 alias theme='~/.fvwm/scripts/theme'
 
 create() {
 	touch -- "$1" &&
 	chmod u+x -- "$1" &&
+	echo "#!/usr/bin/env bash" >> "$1" &&
 	vim -- "$1"
 }
 
@@ -181,6 +182,16 @@ system() {
 		restore) $HOME/.bin/backup restore ;;
 		*) echo " [backup / restore]" ;;
 	esac
+}
+
+gclo() {
+	if [ $# -lt 2 ]; then
+		printf '%s\n' "Usage: gclo [username] [repository]"
+		exit 1
+	fi
+	git clone https://github.com/"$1"/"$2" &&
+	cd  "$2"
+
 }
 
 
