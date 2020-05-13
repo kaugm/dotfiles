@@ -2,10 +2,7 @@
 ## LOCATION: $HOME/.bin/
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.fvwm/scripts/theme $HOME/.fvwm/scripts/crthumb $HOME/.fvwm/scripts/dethumb $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.bin/ps_mem.py $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/sxiv/exec/key-handler)
-
-# Must have all directories needed in this array
-#declare -a DIRS=($HOME/.cache $HOME/.cache/fvwm $HOME/.fvwm $HOME/.fvwm/scripts $HOME/.bin)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.bin/theme $HOME/.bin/crthumb $HOME/.bin/dethumb $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.bin/ps_mem.py $HOME/.bin/install $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/sxiv/exec/key-handler)
 
 BACKUPDIR=$HOME/dotfiles/
 
@@ -32,11 +29,6 @@ backup () {
 restore () {
 
 	[[ -d $BACKUPDIR ]] || { notify "$BACKUPDIR not found. Please git clone repository"; exit 1; }
-	FILES=($(ls -A $BACKUPDIR))
-
-#	for DIR in ${DIRS[@]}; do
-#		[[ -d $DIR ]] || { mkdir $DIR; notify "$DIR created"; }
-#	done
 
 	for FILE in ${SOURCEPATH[@]}; do
 		if [ ! -d $(dirname $FILE) ]; then

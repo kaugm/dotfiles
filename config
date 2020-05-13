@@ -1,7 +1,7 @@
 ## LOCATION: $HOME/.fvwm/
 ## Environment variables
 SetEnv cache $[HOME]/.cache/fvwm
-SetEnv scripts $[HOME]/.fvwm/scripts
+SetEnv scripts $[HOME]/.bin
 SetEnv icons $[HOME]/.fvwm/icons
 
 # Read in dynamic colorsets
@@ -18,7 +18,7 @@ AddToFunc   StartFunction
 #+ I Test Exec exec fvwm-root ~/.fvwm/images/moon.png
 #+ I Test Exec exec feh --bg-scale ~/.fvwm/images/flowers.jpg
 + I Exec exec wal -R
-+ I feh --bg-scale $(cat $HOME/.cache/wal/wal)
++ I Exec exec feh --bg-scale $(cat $HOME/.cache/wal/wal)
 #DestroyFunc InitFunction
 #AddToFunc InitFunction
 #+ I Exec exec xsettingsd &
@@ -354,23 +354,26 @@ AddToFunc StartFunction
 *FvwmPager: UseSkipList
 Style FvwmPager !Title, !Borders, StaysOnTop, Sticky, WindowListSkip, FixedPosition
 
-## Minimize to Thumbnail Placeholder
+## Minimize to Thumbnail Placeholder 400x768+12+12
 Style * IconBox 400x768+12+12, IconGrid 15 15, \
 IconFill top left, !IconTitle, IconBackgroundRelief 0
 
 
 
+
+
+
 # Clock
-#DestroyModuleConfig Clock: *
-#AddToFunc StartFunction
-#+ I Module FvwmButtons -g 160x36-128-12 Clock
-#*Clock: Rows 1
-#*Clock: Columns 1
-#*Clock: BoxSize fixed
-#*Clock: Frame 0
-#*Clock: Padding 0 0
-#*Clock: (1x1+0+0, Swallow "TimeScript" "FvwmScript scripts/TimeScript")
-#*Clock: Back #000000
-#Style Clock BorderWidth 0, !Title, !Borders, WindowListSkip, StaysOnTop, Sticky, FixedPosition
+DestroyModuleConfig Clock: *
+AddToFunc StartFunction
++ I Module FvwmButtons -g 128x36-12+12 Clock
+*Clock: Rows 1
+*Clock: Columns 1
+*Clock: BoxSize fixed
+*Clock: Frame 0
+*Clock: Padding 0 0
+*Clock: (Swallow "TimeScript" "FvwmScript scripts/TimeScript")
+*Clock: Colorset 5
+Style Clock BorderWidth 0, !Title, !Borders, WindowListSkip, StaysOnBottom, Sticky, FixedPosition
 
 

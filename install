@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Set programs
+wm=fvwm
+browser=firefox
+image_viewer=feh
+image_editor=gimp
+term=rxvt-unicode
+launcher=rofi
+
+delare -a repos=(fff sowm sxiv) 
+
+
+sudo apt-get install $wm $browser $image_viewer $image_editor $term $launcher -y
+
+for app in ${repos[@]}; do
+	git clone $app
+done
+
+pip3 install pywal
