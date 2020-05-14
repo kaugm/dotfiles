@@ -12,7 +12,7 @@ scr=scrot
 delare -a repos=(fff sowm sxiv) 
 
 
-sudo apt-get install $wm $browser $image_viewer $image_editor $term $launcher $scr -y
+sudo apt-get install $wm $browser $image_viewer $image_editor $term $launcher $scr vim -y
 
 for app in ${repos[@]}; do
 	git clone $app
