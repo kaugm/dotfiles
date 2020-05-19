@@ -27,7 +27,9 @@ backup () {
 }
 
 restore () {
-
+	# .git directory causes issues with find function when restoring, after repo is cloned from github
+	sudo rm -r .git
+	
 	[[ -d $BACKUPDIR ]] || { notify "$BACKUPDIR not found. Please git clone repository"; exit 1; }
 
 	for FILE in ${SOURCEPATH[@]}; do
