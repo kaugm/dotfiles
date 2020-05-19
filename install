@@ -1,21 +1,58 @@
 #!/usr/bin/env bash
 
-# Set programs
-wm=fvwm
-browser=firefox
-image_viewer=feh
-image_editor=gimp
-term=rxvt-unicode
-launcher=rofi
-scr=scrot
+[[ $(cat /etc/issue) == *"Ubuntu"* ]] || { echo "This install script is built for debian-based OS that uses apt package manager. Please modify the script for it to work on a(n) $(cat /etc/issue | awk '{print $1}') system."; exit 1; }
 
-delare -a repos=(fff sowm sxiv) 
+declare -a REPOS=(sulami/FrankenWM dylanaraps/fff kaugm/sxiv)
+packages="
+xinit
+rxvt-unicode
+git
+vim
+build-essential
+x11-utils
+x11-xserver-utils
+xorg
+feh
+libimlib2
+xrdp
+rofi
+libxcb-util-dev
+libxcb-icccm4-dev
+libxcb-keysyms1-dev
+libxcb-ewmh-dev
+pkg-config
+mousepad
+firefox
+gimp
+thunar
+ranger
+lightdm
+python3.6
+python3-pip
+htop
+scrot"
 
+pkg_install() {
+	sudo apt-get update
+	sudo apt install $packages
+}
+repo_clone() {
+	for REPO in ${REPOS[@]}; do
+		git clone https://github.com/$REPO
+	done
+}
+pip_install() {
+	pip3 install pywal
+}
 
-sudo apt-get install $wm $browser $image_viewer $image_editor $term $launcher $scr vim -y
+main() {
+	pkg_install
+	sleep 5
+	repo_clone
+	sleep 5
+	pip_install
+	sleep 5
+	echo "Please dont forget to compile ${REPOS[@]}."
+}
 
-for app in ${repos[@]}; do
-	git clone $app
-done
-
-pip3 install pywal
+main "$@"
