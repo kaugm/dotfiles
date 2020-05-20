@@ -33,7 +33,8 @@ htop
 scrot
 libimlib2-dev
 libexif-dev
-libxft-dev"
+libxft-dev
+lxappearance"
 
 pkg_install() {
 	sudo apt-get update
