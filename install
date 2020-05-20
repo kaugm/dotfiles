@@ -30,7 +30,9 @@ lightdm
 python3.6
 python3-pip
 htop
-scrot"
+scrot
+libimlib2-dev
+libexif-dev"
 
 pkg_install() {
 	sudo apt-get update
