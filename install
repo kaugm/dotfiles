@@ -2,7 +2,7 @@
 
 [[ $(cat /etc/issue) == *"Ubuntu"* ]] || { echo "This install script is built for debian-based OS that uses apt package manager. Please modify the script for it to work on a(n) $(cat /etc/issue | awk '{print $1}') system."; exit 1; }
 
-declare -a REPOS=(sulami/FrankenWM dylanaraps/fff kaugm/sxiv)
+declare -a REPOS=(sulami/FrankenWM dylanaraps/fff kaugm/sxiv vinceliuice/Qogir-theme vinceliuice/Qogir-icon-theme)
 packages="
 xinit
 rxvt-unicode
