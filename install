@@ -2,7 +2,7 @@
 
 [[ $(cat /etc/issue) == *"Ubuntu"* ]] || { echo "This install script is built for debian-based OS that uses apt package manager. Please modify the script for it to work on a(n) $(cat /etc/issue | awk '{print $1}') system."; exit 1; }
 
-declare -a REPOS=(sulami/FrankenWM dylanaraps/fff kaugm/sxiv vinceliuice/Qogir-theme vinceliuice/Qogir-icon-theme)
+declare -a REPOS=(sulami/FrankenWM dylanaraps/fff kaugm/sxiv vinceliuice/Qogir-theme vinceliuice/Qogir-icon-theme drscream/lemonbar-xft)
 packages="
 xinit
 rxvt-unicode
@@ -34,7 +34,10 @@ scrot
 libimlib2-dev
 libexif-dev
 libxft-dev
-lxappearance"
+lxappearance
+libxcb-randr0-dev #lemonbar-xft
+libx11-xcb-dev #lemonbar-xft
+libxcb-xinerama0-dev" #lemonbarxft
 
 pkg_install() {
 	sudo apt-get update
