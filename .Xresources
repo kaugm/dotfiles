@@ -1,10 +1,10 @@
 ! Fonts
-URxvt.font: xft:Inconsolata:size=12.5:antialias=true
+URxvt.font: xft:Inconsolata:style=Regular:size=12.5:antialias=true
 URxvt.boldFont:
 XTerm.font:xft:hlv:pixelsize=11:antialias=True,xft:JackeyFont:pixelsize=11:antialias=True
 XTerm.boldFont:
 
-URxvt.internalBorder: 75
+URxvt.internalBorder: 128
 
 ! General
 *.scrollBar: false

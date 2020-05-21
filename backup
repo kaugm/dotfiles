@@ -2,7 +2,7 @@
 ## LOCATION: $HOME/.bin/
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.bin/theme $HOME/.bin/crthumb $HOME/.bin/dethumb $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.bin/ps_mem.py $HOME/.bin/install $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/sxiv/exec/key-handler)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.bin/theme $HOME/.bin/wm_color $HOME/.bin/bar.sh $HOME/.bin/crthumb $HOME/.bin/dethumb $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.bin/ps_mem.py $HOME/.bin/install $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/sxiv/exec/key-handler $HOME/.config/dunst/dunstrc)
 
 BACKUPDIR=$HOME/dotfiles/
 
@@ -48,6 +48,23 @@ restore () {
 
 }
 
+init () {
+	# .git directory causes issues with find function when restoring, after repo is cloned from github
+	sudo rm -r .git
+	
+	[[ -d $BACKUPDIR ]] || { notify "$BACKUPDIR not found. Please git clone repository"; exit 1; }
+
+	for FILE in ${SOURCEPATH[@]}; do
+		if [ ! -d $(dirname $FILE) ]; then
+			mkdir -p $(dirname $FILE)
+			notify "$(dirname $FILE) created"
+		fi
+
+		cp $(find $BACKUPDIR -name $(basename $FILE)) $FILE || { notify "Error restoring $FILE"; continue; }
+		notify "$FILE restored"
+	done
+}
+
 # Preferred method of notification
 notify() {
 	notify-send "$@"
@@ -58,6 +75,7 @@ notify() {
 case $1 in 
 	backup) backup "$@" ;;
 	restore) restore "$@" ;;
-	*) echo "args: [ backup / restore ]" ;;
+	init) init "$@" ;;
+	*) echo "args: [ backup / restore / init ]" ;;
 esac
 

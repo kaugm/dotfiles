@@ -56,8 +56,9 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# other prompt characters: ➜››
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\w ➜\[\033[00m\] '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\w  ➜\[\033[00m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -115,7 +116,7 @@ allow() {
 }
 
 # Theme related commands
-alias theme='~/.bin/theme'
+alias theme='~/.bin/wm_color'
 
 create() {
 	touch -- "$1" &&
@@ -191,7 +192,15 @@ gclo() {
 	fi
 	git clone https://github.com/"$1"/"$2" &&
 	cd  "$2"
+}
 
+pkg() {
+	case $1 in
+		install) sudo apt install $2 -y ;;
+		remove) sudo apt purge $2 -y ;;
+		clean) sudo apt autoremove ;;
+		*) echo "[ install / remove / clean ]" ;;
+	esac
 }
 
 
