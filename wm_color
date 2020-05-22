@@ -8,12 +8,14 @@ download_theme_light() {
 	wal -l -i /tmp/wallpaper.jpg
 	feh --bg-scale /tmp/wallpaper.jpg || { notify 'Failed. Feh cant read image'; exit 1; }
 	sleep 2
+	update_bar
 }
 
 set_theme_light() {
 	wal -l -i $HOME/Pictures/$3
 	feh --bg-scale $HOME/Pictures/$3 || { notify 'Failed. Feh cant read image'; exit 1; }
 	sleep 4
+	update_bar
 }
 
 
@@ -24,12 +26,20 @@ download_theme_dark() {
 	wal -i /tmp/wallpaper.jpg
 	feh --bg-scale /tmp/wallpaper.jpg || { notify 'Failed. Feh cant read image'; exit 1; }
 	sleep 2
+	update_bar
 }
 
 set_theme_dark() {
 	wal -i $HOME/Pictures/$3
 	feh --bg-scale $HOME/Pictures/$3 || { notify 'Failed. Feh cant read image'; exit 1; }
 	sleep 4
+	update_bar
+}
+
+update_bar() {
+	pkill lemonbar
+	sleep 1
+	$HOME/.bin/bar_update.sh
 }
 
 
