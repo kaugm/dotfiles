@@ -1,6 +1,3 @@
-### linux dotfiles
-
-
 Installation
 ------------
 
