@@ -2,7 +2,7 @@
 ## LOCATION: $HOME/.bin/
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/.fvwm/config $HOME/.bin/theme $HOME/.bin/wm_color $HOME/.bin/notify $HOME/.bin/crthumb $HOME/.bin/dethumb $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.bin/frankenwm2bar2.sh $HOME/.bin/bar_update.sh $HOME/.bin/install $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/sxiv/exec/key-handler $HOME/.config/dunst/dunstrc)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/.bin/wm_color $HOME/.bin/notify $HOME/.bin/backup $HOME/.bin/powermenu.sh $HOME/.bin/mmwmbar.sh $HOME/.bin/start.sh $HOME/.bin/bar_update.sh $HOME/.bin/install $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/dunst/dunstrc)
 
 BACKUPDIR=$HOME/dotfiles/
 

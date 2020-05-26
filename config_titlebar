@@ -1,0 +1,363 @@
+## Environment variables
+SetEnv cache $[HOME]/.cache/fvwm
+SetEnv scripts $[HOME]/.fvwm/scripts
+SetEnv icons $[HOME]/.fvwm/icons
+
+# Read in dynamic colorsets
+Read $./dyn_colors.fvwm2rc
+
+## Functions
+DestroyFunc StartFunction
+AddToFunc   StartFunction
+#+ I Test Exec exec fvwm-root ~/.fvwm/images/moon.png
+#+ I Test Exec exec feh --bg-scale ~/.fvwm/images/flowers.jpg
+#DestroyFunc InitFunction
+#AddToFunc InitFunction
+#+ I Exec exec xsettingsd &
+#+ I Exec exec xbacklight -set 10
+#+ I Exec exec dunst &
+
+#Alt-Tab function
+DestroyFunc WindowListFunc
+AddToFunc WindowListFunc
++ I Iconify off
++ I FlipFocus
++ I Raise
+
+## To Create a Thumbnail on Minimize
+# Call the script to create a thumbnail using ImageMagick & xwd
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I ThisWindow (Shaded) WindowShade
++ I PipeRead 'bash $[scripts]/crthumb "$[w.id]" "$[cache]"'
+# Restore the window
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I PipeRead 'bash $[scripts]/dethumb "$[w.id]" "$[cache]"'
+*FvwmEvent: deiconify DeThumbnail
+
+## Window Snapping [FIX WHEN NEW MONITOR ARRIVES -> MAXIMIZE TRUE 234[P] 100 -> HORIZONTAL SIZE BY PIXELS]
+DestroyFunc SnapLeft
+AddToFunc SnapLeft
++ I Move 0 0
++ I Maximize True 49 100
++ I Raise
+# Snap right
+DestroyFunc SnapRight
+AddToFunc SnapRight
++ I Maximize True 49 100
++ I Move -0 0
++ I Raise
+DestroyFunc SnapHalf
+AddToFunc SnapHalf
++ I Maximize True 75 75
++ I Move 50-50w 50-50w
++ I Raise
+DestroyFunc SnapQuarter
+AddToFunc SnapQuarter
++ I Maximize True 50 50
++ I Move 50-50w 50-50w
++ I Raise
+
+# Other window functions
+DestroyFunc CenterWin
+AddToFunc CenterWin
++ I Move 50-50w 50-50w
++ I Raise
+# Maximize window
+DestroyFunc WinMax
+AddToFunc WinMax
++ I Maximize 100 100
+## Raising Window
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+DestroyFunc RaiseMove
+AddToFunc RaiseMove
++ I Raise
++ M $0
+
+# Mouse hold function -> pairs with mouse binding
+DestroyFunc MouseMove
+AddToFunc MouseMove
++ H $0
+
+
+## Keybindings
+# Ignore Numlock and other modifiers for bindings
+IgnoreModifiers L25
+# Launching apps
+Key D A 4 Exec rofi -show run
+Key Return A 4 Exec urxvt
+# Volume control
+#Key XF86AudioRaiseVolume A A Exec amixer -q set Master 5%+
+#Key XF86AudioLowerVolume A A Exec amixer -q set Master 5%-
+#Key XF86AudioMute A A Exec amixer set Master toggle
+# Check time and date
+Key i A 4 Exec notify-send "$(LANG=en_US.utf8 LC_TIME=en_US.utf8 date +'%H:%M')" \
+"$(LANG=en_US.utf8 LC_TIME=en_US.utf8 date +'%A %-d %B %Y')"
+
+## Workspace & window Bindings
+# Close, maximize, and minimize
+Key q WT 4 Close
+# Super + 1-4 to switch workspace
+Key 1 A 4 GotoPage 0 0
+Key 2 A 4 GotoPage 1 0
+# Super + Shift + 1-4 to send to another workspace
+Key 1 A 4S MovetoPage 0 0
+Key 2 A 4S MovetoPage 1 0
+# Control + Alt + Left/Right like usual
+Key Left A CM GotoPage -1p +0p
+Key Right A CM GotoPage +1p +0p
+# Window snapping
+Key Left A 4 SnapLeft
+Key Right A 4 SnapRight
+Key Up A 4 WinMax
+Key Down A 4 Thumbnail
+# Move to the edge of the screen
+Key Left A C4 Move w-5 keep
+Key Right A C4 Move w+5 keep
+Key Up A C4 Move keep w-5
+Key Down A C4 Move keep w+5
+# Resize Windows
+Key Left A S4 Resize w-5 keep
+Key Right A S4 Resize w+5 keep
+Key Up A S4 Resize keep w-5
+Key Down A S4 Resize keep w+5
+# Move to the center of the screen
+#Key a A 4 Move 50-50w 50-50w
+Key c A 4 CenterWin
+# Alt-Tab functionality
+Key Tab A M WindowList Root c c CurrentDesk, NoGeometry, OnlyNormal, NoCurrentDeskTitle, CurrentAtEnd, IconifiedAtEnd
+# Launches root menu
+Key m A 4 Menu MenuFvwmRoot
+
+## Mouse bindings
+# Double Click Delay
+ClickTime 250
+MoveThreshold 3
+
+## Focus on Hover Instead of ClickToFocus
+Style * SloppyFocus, MouseFocusClickRaises
+
+## Close window upon clock of Close area (2)
+Mouse 1 2 A Close
+
+## Super + down scroll will iconify a window
+Mouse 5	TW 4 Thumbnail
+
+## Rootmenu on The Desktop with left/right mouse click
+Mouse 1	R A Menu MenuFvwmRoot
+Mouse 3 R A Menu MenuFvwmRoot
+
+## On minimized windows
+Mouse 1 I A Iconify off
+
+# Move/resize window with mouse -> pairs with MouseMove function
+Mouse 1 TW 4 MouseMove Move
+Mouse 1 TW S4 MouseMove Resize
+
+
+
+## Menus activefore #9bbff4 
+MenuStyle * Menucolorset 5, ActiveFore $[active_fg], VerticalMargins 30 30, VerticalItemSpacing 8 8, PopupOffset 10 100
+MenuStyle * Hilight3DOff
+MenuStyle * TrianglesSolid, TrianglesUseFore
+MenuStyle * ItemFormat "%|%30.0p%4.2i%5.3l%5.3>%30.0p%|"
+MenuStyle * Font "xft:Ubuntu:Bold:size=9:antialias=True"
+MenuStyle * BorderWidth 0
+
+## Root Menu on The Desktop
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot
++ "&RUN" Exec exec rofi -show run
++ "&TERMINAL" Exec exec urxvt
++ "&FILE SYSTEM" Popup MenuPlaces
++ "R&ANGER" Exec exec urxvt -e ranger
++ "&WEB BROWSER" Exec exec firefox
++ "&IMAGE EDITOR" Exec exec gimp
++ "&BIN" Popup MenuBin
++ "&SYSTEM" Popup MenuSys
+
+## Root Menu >> MenuBin
+DestroyMenu MenuBin
+AddToMenu   MenuBin
++ "&NEW THEME" Popup MenuTheme
++ "&EDIT CONFIG" Exec exec urxvt -e vim ~/.fvwm/config
++ "&BACKUP" Exec exec /home/karl/backup
++ "&COPY CONFIG TO SHARE" Exec exec urxvt -e scp ~/.fvwm/config pi@192.168.1.250:/Shared/Backup/FVWM/.fvwm/config
++ "&SSH SAMBA" Exec exec urxvt -e ssh pi@192.168.1.250
+
+# System Menu
+DestroyMenu MenuSys
+AddToMenu MenuSys
++ "RE&FRESH" Refresh
++ "&RESTART" Restart
+#+ "&Quit" Module FvwmScript FvwmScript-ConfirmQuit
++ "&SHUTDOWN" Exec exec sudo shutdown now
+
+# Places (filesystem) menu
+DestroyMenu MenuPlaces
+AddToMenu MenuPlaces
++ "&HOME" Exec exec thunar ~
++ ".&CONFIG" Exec exec thunar ~/.config
++ "&DOWNLOADS" Exec exec thunar ~/Downloads
++ "&FILE SHARE" Exec exec thunar smb://192.168.1.250:/Shared/
+
+# Theme setting menu
+DestroyMenu MenuTheme
+AddToMenu MenuTheme
++ "DOWNLOAD &LIGHT" Exec exec $[scripts]/theme download light random
++ "DOWNLOAD &DARK" Exec exec $[scripts]/theme download dark random
+#+ "&SET LIGHT"
+#+ "S&ET DARK"
+
+# Window List (alt+tab)
+MenuStyle WindowList MenuColorSet 0, ActiveColorSet 1, HilightBack, VerticalMargins 30 30, VerticalItemSpacing 8 8
+MenuStyle WindowList ItemFormat "%35.0p%|%10.0p%4.2i%5.3l%5.3>%10.0p%|%35.0p"
+MenuStyle WindowList Font "xft:Ubuntu:Bold:size=9:antialias=True"
+MenuStyle WindowList BorderWidth 0
+
+
+
+
+
+
+## Colorsets
+# Dark mode
+Colorset 0 fg #cccccc, bg #191921, hi, sh, Plain, NoShape
+# Light mode
+Colorset 1 fg #191921, bg #cccccc, hi, sh, Plain, NoShape
+# Dark mode pager colorset
+Colorset 2 fg #aaaaaa, bg #191921, hi, sh, Plain, NoShape
+# Light mode pager colorset
+Colorset 3 fg #191921, bg #888888, hi, sh, Plain, NoShape
+# Testing colorset
+Colorset 4 fg #ff0000, bg #ff0000, hi, sh, Plain, NoShape
+
+
+
+
+
+
+
+
+## Styles
+## Default Font
+DefaultFont "xft:Ubuntu:Regular:size=10:antialias=True"
+
+## Place It On Center instead of MinOverlapPlacement
+Style * CascadePlacement
+#Style * GrabFocusOff, !UsePPosition
+# BELOW ENSURES FOCUS ON WINDOW CREATION
+Style * GrabFocus, GrabFocusTransient
+Style * ResizeOpaque
+
+## Transient Windows, Such as Open File Windows
+Style * DecorateTransient, StackTransientParent
+Style * !FPGrabFocusTransient, FPReleaseFocusTransient
+
+## Disable Icons from Appearing on Desktop
+Style * !Icon
+
+## Decoration Styles
+Style * TitleAtTop, !Handles
+Style * ResizeHintOverride
+Style * BorderWidth 0, HandleWidth 0
+Style * Colorset 5, HilightColorset 5
+
+## Window Specific Styles
+Style ConfirmQuit !Title, PositionPlacement Center, WindowListSkip, Layer 6
+Style FvwmIdent WindowListSkip
+
+
+
+
+
+
+## Decorations
+# Buttons Locations 1 3 5 7 9 T T T T T 0 8 6 4 2
+# 2 >> Close, 4 >> Maximize, 6 >> Minimize, 1 >> Window Menu
+TitleStyle Centered Height 36 -- Flat
+ButtonStyle Reset
+ButtonStyle All -- Flat
+ButtonStyle All -- UseTitleStyle
+AddButtonStyle All Vector 2 1x1@4 1x1@4
+# CLOSE BUTTON ONLY
+AddButtonStyle 2 \
+	ActiveUp (Pixmap $[icons]/close.png -- Flat) \
+	ActiveDown (Pixmap $[icons]/close.png -- Flat) \
+	Inactive (Pixmap $[icons]/close.png -- Flat)
+
+
+
+
+
+
+
+
+## Modules
+## FvwmIdent
+# To get various window info
+# Used in Titlebar Right Click >> More >> Identify
+DestroyModuleConfig FvwmIdent:*
+*FvwmIdent: Colorset 10
+*FvwmIdent: Font "xft:Sans:Regular:size=8:antialias=True"
+
+## FvwmScript
+# To create desktop widget like date time & quit popup menu
+# Only used for quit popup menu this time
+DestroyModuleConfig FvwmScript:*
+*FvwmScript: DefaultColorset 10
+
+                          
+## Pager
+## Workspace
+DesktopSize 2x1
+EdgeScroll 0 0
+EdgeResistance 0
+EdgeThickness 0
+Style * EdgeMoveDelay 350
+Style * EdgeMoveResistance 350
+EwmhBaseStruts 12 12 12 12
+
+# Prevents ugly box when moving window and removes geometry window
+OpaqueMoveSize unlimited
+HideGeometryWindow Always
+
+## Workspace Indicator
+DestroyModuleConfig FvwmPager: *
+AddToFunc StartFunction
++ I Module FvwmPager
+*FvwmPager: font none
+*FvwmPager: Rows 1
+*FvwmPager: Column 2
+*FvwmPager: Back #000000
+*FvwmPager: Fore #000000
+*FvwmPager: WindowColors #dddddd #dddddd #dddddd $[active_fg]
+*FvwmPager: Geometry 128x36-12-12
+*FvwmPager: UseSkipList
+Style FvwmPager !Title, !Borders, StaysOnTop, Sticky, WindowListSkip, FixedPosition
+
+## Minimize to Thumbnail Placeholder
+Style * IconBox 400x768+12+12, IconGrid 15 15, \
+IconFill top left, !IconTitle, IconBackgroundRelief 0
+
+
+
+# Clock
+#DestroyModuleConfig Clock: *
+#AddToFunc StartFunction
+#+ I Module FvwmButtons -g 160x36-128-12 Clock
+#*Clock: Rows 1
+#*Clock: Columns 1
+#*Clock: BoxSize fixed
+#*Clock: Frame 0
+#*Clock: Padding 0 0
+#*Clock: (1x1+0+0, Swallow "TimeScript" "FvwmScript scripts/TimeScript")
+#*Clock: Back #000000
+#Style Clock BorderWidth 0, !Title, !Borders, WindowListSkip, StaysOnTop, Sticky, FixedPosition
+
+

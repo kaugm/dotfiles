@@ -3,29 +3,16 @@
 
 case $1 in
 	covid) 
-		covid=$(curl https://corona-stats.online/states/US?format\=json | python3 -c 'import sys,json;data=json.load(sys.stdin)["data"][17];print(str(data["active"]) + " active cases with " + str(data["todayCases"]) + " new cases today.")')
+		covid=$(curl -s https://corona-stats.online/states/US?format\=json | python3 -c 'import sys,json;data=json.load(sys.stdin)["data"][17];print(str(data["active"]) + " active cases with " + str(data["todayCases"]) + " new cases today.")')
 		notify-send "NC Coronavirus Update" "$covid" ;;
 	date) 
 		date=$(date "+%d %b %H:%M")
 		notify-send "It is currently" "$date" ;;
+	weather)
+		current=$(curl -s wttr.in/Raleigh\?format\="%t%20%20%C%20"\&m)
+		notify-send "Current weather in Raleigh" "$current" ;;
 	*) notify-send "Unknown argument" ;;
 esac
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
