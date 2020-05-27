@@ -25,4 +25,4 @@ while read -t 60 -r wmout || true; do
     fi
     printf "%s%s%s\n" "%{l}%{B$fgcolor}%{F$bgcolor}    $workspace   %{B-}%{F-}" "%{r}%{B$fgcolor}%{F$bgcolor}   $mode   $(date +"%d %b %H:%M")   %{B-}%{F-}"
 done < "$ff" | lemonbar -p -d -g 2560x30 -u 2 -B "#000000" -F "#eeeeee" \
--o 2 -f "Ubuntu:size=9" &
+-o 1 -f "Ubuntu:size=9" &
