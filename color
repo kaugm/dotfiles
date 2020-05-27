@@ -2,7 +2,7 @@
 ## LOCATION: $HOME/.bin/
 
 notify() {
-	notify-send "$@" || { echo "$@"; exit 1; }
+	notify-send "$@" || { echo "$@"; }
 }
 download_wp() {
 	wget -O /tmp/wallpaper.jpg https://unsplash.it/2650/1440/?random || { notify 'Download failed. Check network status'; exit 1; }
@@ -19,17 +19,16 @@ usage() {
     echo "new [*]         new light wallpaper and theme"
     echo "set \$PATH       set theme with existing wallpaper"
     echo "set \$PATH [*]   set light theme with existing wallpaper"
+    echo "copy [name]      copy new wallpaper to Pictures folder"
 }
 
 case $1 in
-	set)
-		[[ -z "$3" ]] && mode="-i" || mode="-l -i"
+	set) [[ -z "$3" ]] && mode="-i" || mode="-l -i"
 		wal $mode $2
 		sleep 2
 		update_bar
 		notify "Theme updated" ;;
-	new)
-		[[ -z "$2" ]] && mode="-i" || mode="-l -i"
+	new) [[ -z "$2" ]] && mode="-i" || mode="-l -i"
 		wal -c
 		download_wp
 		sleep 2
@@ -37,6 +36,7 @@ case $1 in
 		sleep 2
 		update_bar
 		notify "Theme updated" ;;
+	copy) cp /tmp/wallpaper.jpg $HOME/Pictures/$2.jpg ;;
 	*) usage ;;
 esac
 
