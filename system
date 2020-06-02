@@ -2,13 +2,14 @@
 ## LOCATION: $HOME/.bin/
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/.bin/color $HOME/.bin/notify $HOME/.bin/system $HOME/.bin/powermenu.sh $HOME/.bin/mmwmbar.sh $HOME/.bin/start.sh $HOME/.bin/bar_update.sh $HOME/.bin/install $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/dunst/dunstrc)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/.bin/color $HOME/.bin/notify $HOME/.bin/system $HOME/.bin/powermenu.sh $HOME/.bin/mmwmbar.sh $HOME/.bin/start.sh $HOME/.bin/bar_update.sh $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/dunst/dunstrc)
 
 BACKUPDIR=$HOME/dotfiles/
 
 backup () {
 	[[ -d $BACKUPDIR ]] || { mkdir $BACKUPDIR; notify "$BACKUPDIR created"; }
 
+	# Compare the local file associated with each file found in the backup directory. If there is a difference, back it up. If no file is found in the backup directory, perform inital backup
 	for FILE in ${SOURCEPATH[@]}; do
 		if [ -f "$(find $BACKUPDIR -name $(basename $FILE))" ]; then
 			if [[ $(cmp $FILE $(find $BACKUPDIR -name $(basename $FILE))) ]]; then
@@ -20,8 +21,15 @@ backup () {
 			initialbackups="$initialbackups$FILE "
 		fi
 	done
-	notify "New versions of: $newversions"
-	notify "Initial backups of: $initialbackups"
+	# Checking strings to make sure they are full before calling notify function
+	if [ ! -z "$newversions" ]; then
+		notify "New versions of: $newversions"
+		if [ ! -z "$initialbackups" ]; then
+			notify "Initial backups of: $initialbackups"
+		fi
+	else
+		notify "Nothing to be backed up"
+	fi
 }
 
 restore () {
@@ -37,8 +45,16 @@ restore () {
 			restoredfiles="$restoredfiles$FILE "
 		fi
 	done
-	notify "Directories created for: $dirscreated"
-	notify "Files restored: $restoredfiles"
+	
+	# Checking strings to make sure they are full before calling notify function
+	if [ ! -z "$dirscreated" ]; then
+		notify "Directories created for $dirscreated"
+		if [ ! -z "$restoredfiles" ]; then
+			notify "Files restored: $restoredfiles"
+		fi
+	else
+		notify "Nothing has been restored"
+	fi
 }
 
 init () {
@@ -56,8 +72,16 @@ init () {
 		cp $(find $BACKUPDIR -name $(basename $FILE)) $FILE || { notify "Error restoring $FILE"; err_log "Error restoring $FILE"; continue; }
 		restoredfiles="$restoredfiles$FILE "
 	done
-	notify "Directories created for: $dirscreated"
-	notify "Files restored: $restoredfiles"
+	
+	# Checking strings to make sure they are full before calling notify function
+	if [ ! -z "$dirscreated" ]; then
+		notify "Directories created for $dirscreated"
+		if [ ! -z "$restoredfiles" ]; then
+			notify "Files restored: $restoredfiles"
+		fi
+	else
+		notify "Nothing has been restored"
+	fi
 }
 
 # Preferred method of notification
@@ -65,7 +89,7 @@ notify() {
 	notify-send "$@" || { echo "$@"; }
 }
 err_log() {
-	[[ ! -e err.log ]] || touch err.log
+	[[ -e err.log ]] || touch err.log
 	echo "$@" >> err.log
 }
 usage() {
@@ -85,4 +109,3 @@ case $1 in
 	init) init "$@" ;;
 	*) usage ;;
 esac
-

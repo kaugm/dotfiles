@@ -5,10 +5,12 @@ notify() {
 	notify-send "$@" || { echo "$@"; }
 }
 download_wp() {
-	wget -O /tmp/wallpaper.jpg https://unsplash.it/2650/1440/?random || { notify 'Download failed. Check network status'; exit 1; }
+	echo "Downloading wallpaper.."
+	wget -q -O /tmp/wallpaper.jpg https://unsplash.it/2650/1440/?random || { notify 'Download failed. Check network status'; exit 1; }
 	wp="/tmp/wallpaper.jpg"
 }
 update_bar() {
+	sleep 2
 	pkill lemonbar
 	sleep 1
 	$HOME/.bin/bar_update.sh
@@ -21,11 +23,11 @@ usage() {
     echo "set \$PATH [*]   set light theme with existing wallpaper"
     echo "copy [name]      copy new wallpaper to Pictures folder"
 }
-
+wp=($(find $HOME/Pictures -type f | sort -R))
 case $1 in
 	set) [[ -z "$3" ]] && mode="-i" || mode="-l -i"
-		wal $mode $2
-		sleep 2
+		[[ $2 == "random" ]] && bg=${wp[0]} || bg=$2
+		wal $mode $bg
 		update_bar
 		notify "Theme updated" ;;
 	new) [[ -z "$2" ]] && mode="-i" || mode="-l -i"
@@ -33,10 +35,8 @@ case $1 in
 		download_wp
 		sleep 2
 		wal $mode $wp
-		sleep 2
 		update_bar
 		notify "Theme updated" ;;
 	copy) cp /tmp/wallpaper.jpg $HOME/Pictures/$2.jpg ;;
 	*) usage ;;
 esac
-
