@@ -2,7 +2,7 @@
 
 [[ $(cat /etc/issue) == *"Ubuntu"* ]] || { echo "This install script is built for debian-based OS that uses apt package manager. Please modify the script for it to work on a(n) $(cat /etc/issue | awk '{print $1}') system."; exit 1; }
 
-declare -a REPOS=(sulami/FrankenWM dylanaraps/fff kaugm/sxiv vinceliuice/Qogir-theme vinceliuice/Qogir-icon-theme drscream/lemonbar-xft)
+declare -a REPOS=(kaugm/mmwm dylanaraps/fff kaugm/sxiv vinceliuice/Qogir-theme vinceliuice/Qogir-icon-theme drscream/lemonbar-xft)
 packages="
 xinit
 rxvt-unicode
@@ -37,7 +37,9 @@ libxft-dev
 lxappearance
 libxcb-randr0-dev #lemonbar-xft
 libx11-xcb-dev #lemonbar-xft
-libxcb-xinerama0-dev" #lemonbarxft
+libxcb-xinerama0-dev #lemonbar-xft
+notify-send
+dunst"
 
 pkg_install() {
 	sudo apt-get update
@@ -60,6 +62,7 @@ main() {
 	pip_install
 	sleep 5
 	echo "Please dont forget to compile ${REPOS[@]}."
+	echo "Please dont forget to install VS Code."
 }
 
 main "$@"
