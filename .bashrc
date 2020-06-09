@@ -116,7 +116,7 @@ allow() {
 }
 
 # Theme related commands
-alias theme='~/.bin/wm_color'
+alias theme='~/.bin/color'
 
 create() {
 	touch -- "$1" &&
@@ -165,7 +165,15 @@ search() {
 	history) history | grep $2 ;;
 	proc) ps aux | grep $2 ;;
 	pkg) apt-cache search $2 ;;
-	*) echo "search [file / dir / history / proc / pkg] [name*]" ;;
+	str)
+		FILES=($(find -type f))
+		for FILE in ${FILES[@]}; do
+			if [[ $(cat $FILE | grep "$2") ]]; then
+				echo $FILE
+			fi
+		done ;;
+
+	*) echo "search [file / dir / history / proc / pkg / str] [name*]" ;;
 	esac
 }
 
@@ -179,8 +187,8 @@ esac
 
 system() {
 	case $1 in
-		backup) $HOME/.bin/backup backup ;;
-		restore) $HOME/.bin/backup restore ;;
+		backup) $HOME/.bin/system backup ;;
+		restore) $HOME/.bin/system restore ;;
 		*) echo " [backup / restore]" ;;
 	esac
 }
