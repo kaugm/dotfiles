@@ -1,11 +1,11 @@
-# dotfiles
-linux dotfiles
+# linux dotfiles
 
-To restore:
+Installation
+------------
 
-git clone https://github.com/kaugm/dotfiles  
-cd dotfiles\
-./backup restore\
-./install<-(untested, and will still need to compile select programs)
+    $ git clone https://github.com/kaugm/dotfiles
+    $ cd dotfiles
+    $ ./install
+    $ ./system init
 
-##### Warning: Restoring will overwrite current dotfiles. Please back them up first
+##### Warning: Restoring will overwrite current dotfiles. Please back them up first.
