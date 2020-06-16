@@ -12,7 +12,7 @@ URxvt.internalBorder: 128
 *.internalBorder: 10
 *.cursorUnderline: true
 *.cursorBlink: true
-*.dynamicColors:on
+*.dynamicColors:off
 *.letterSpace: 0
 *.geometry: 85x20
 

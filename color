@@ -24,12 +24,13 @@ usage() {
     echo "copy [name]      copy new wallpaper to Pictures folder"
 }
 wp=($(find $HOME/Pictures -type f | sort -R))
+wp_path="$HOME/Pictures/"
 case $1 in
 	set) [[ -z "$3" ]] && mode="-i" || mode="-l -i"
-		[[ $2 == "random" ]] && bg=${wp[0]} || bg=$2
+		[[ $2 == "random" ]] && bg=${wp[0]} || bg="$wp_path$2.jpg"
 		wal $mode $bg
 		update_bar
-		notify "Theme updated" ;;
+		notify "Theme updated: $bg" ;;
 	new) [[ -z "$2" ]] && mode="-i" || mode="-l -i"
 		wal -c
 		download_wp

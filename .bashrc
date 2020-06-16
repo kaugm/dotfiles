@@ -211,6 +211,11 @@ pkg() {
 	esac
 }
 
+dl() {
+	[[ -z "$2" ]] || echo "Usage: dl [FILE] [URL]"
+	wget -O $1 $2
+}
+
 
 
 # enable programmable completion features (you don't need to enable
