@@ -15,6 +15,16 @@ update_bar() {
 	sleep 1
 	$HOME/.bin/bar_update.sh
 }
+update_dunst() {
+	ln -sf $HOME/.cache/wal/dunstrc $HOME/.config/dunst/dunstrc
+	pkill dunst
+	dunst &
+}
+list() {
+	for i in ${wp[@]}; do
+		echo $(basename $i | cut -f 1 -d '.')
+	done
+}
 usage() {
     echo "Usage:"
     echo "new             new dark wallpaper and theme"
@@ -29,6 +39,7 @@ case $1 in
 	set) [[ -z "$3" ]] && mode="-i" || mode="-l -i"
 		[[ $2 == "random" ]] && bg=${wp[0]} || bg="$wp_path$2.jpg"
 		wal $mode $bg
+		update_dunst
 		update_bar
 		notify "Theme updated: $bg" ;;
 	new) [[ -z "$2" ]] && mode="-i" || mode="-l -i"
@@ -36,8 +47,10 @@ case $1 in
 		download_wp
 		sleep 2
 		wal $mode $wp
+		update_dunst
 		update_bar
 		notify "Theme updated" ;;
 	copy) cp /tmp/wallpaper.jpg $HOME/Pictures/$2.jpg ;;
+	list) list ;;
 	*) usage ;;
 esac
