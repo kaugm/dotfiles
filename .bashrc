@@ -216,6 +216,14 @@ dl() {
 	wget -O $1 $2
 }
 
+connect() {
+	case $2 in
+		samba) host="192.168.1.250" ;;
+		*) host=$2 ;;
+	esac
+	ssh $1@$host
+}
+
 
 
 # enable programmable completion features (you don't need to enable

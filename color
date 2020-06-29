@@ -40,7 +40,7 @@ case $1 in
 		[[ $2 == "random" ]] && bg=${wp[0]} || bg="$wp_path$2.jpg"
 		wal $mode $bg
 		update_dunst
-		update_bar
+		#update_bar
 		notify "Theme updated: $bg" ;;
 	new) [[ -z "$2" ]] && mode="-i" || mode="-l -i"
 		wal -c
@@ -48,7 +48,7 @@ case $1 in
 		sleep 2
 		wal $mode $wp
 		update_dunst
-		update_bar
+		#update_bar
 		notify "Theme updated" ;;
 	copy) cp /tmp/wallpaper.jpg $HOME/Pictures/$2.jpg ;;
 	list) list ;;
