@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Run rpg color script
+$HOME/bin/rpg $1
+
+case $1 in
+	r) $HOME/bin/rpg r ;;
+	c) $HOME/bin/rpg c ;;
+	d) echo $(cat $HOME/.cache/rpg/colors | grep color0 | cut -d '"' -f2) > $HOME/.cache/rpg/colors_xmenu
+	echo $(cat $HOME/.cache/rpg/colors | grep color8 | cut -d '"' -f2) >> $HOME/.cache/rpg/colors_xmenu
+	echo "#eeeeee" >> $HOME/.cache/rpg/colors_xmenu ;;
+	l) echo $(cat $HOME/.cache/rpg/colors | grep color0 | cut -d '"' -f2) > $HOME/.cache/rpg/colors_xmenu
+	echo $(cat $HOME/.cache/rpg/colors | grep color8 | cut -d '"' -f2) >> $HOME/.cache/rpg/colors_xmenu
+	echo "#111111" >> $HOME/.cache/rpg/colors_xmenu ;;
+esac

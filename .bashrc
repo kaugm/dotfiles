@@ -8,6 +8,9 @@ case $- in
       *) return;;
 esac
 
+# COLOR RELOAD - FOR RPG
+$HOME/bin/rpg r
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -75,6 +78,9 @@ esac
 
 
 # Alias
+
+alias restart='sudo shutdown -r now'
+
 # Directory stuff
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -105,6 +111,7 @@ mod() {
 	esac
 }
 
+alias gen='$HOME/bin/gen'
 
 # Change permissions
 allow() {
@@ -114,9 +121,6 @@ allow() {
 	*) echo "[rw / x] [file]" ;;
 	esac
 }
-
-# Theme related commands
-alias theme='~/.bin/color'
 
 create() {
 	touch -- "$1" &&
@@ -152,6 +156,7 @@ search() {
 	dir) 	c=1
 	local dir=($(find / -type d -name $2 2>&1 | grep -v "Permission denied\|Invalied argument"))
 	if [ $(find / -type d -name $2 2>&1 | grep -v "Permission denied\|Invalied argument" | wc -l) -gt 1 ]; then
+		echo "Which directory would you like to navigate to?"
 		for item in ${dir[@]}; do
 			echo "$c. $item"
 			((c++))
@@ -187,8 +192,8 @@ esac
 
 system() {
 	case $1 in
-		backup) $HOME/.bin/system backup ;;
-		restore) $HOME/.bin/system restore ;;
+		backup) $HOME/bin/system backup ;;
+		restore) $HOME/bin/system restore ;;
 		*) echo " [backup / restore]" ;;
 	esac
 }

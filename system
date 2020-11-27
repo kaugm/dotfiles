@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-## LOCATION: $HOME/.bin/
+## LOCATION: $HOME/bin/
 
 # Insert file paths of files for backup
-declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/.bin/color $HOME/.bin/notify $HOME/.bin/system $HOME/.bin/powermenu.sh $HOME/.bin/mmwmbar.sh $HOME/.bin/bar_update.sh $HOME/.bin/xmenu.sh $HOME/.config/rofi/config.rasi $HOME/.config/wal/templates/colors-rofi-dark.rasi $HOME/.config/wal/templates/dunstrc)
+declare -a SOURCEPATH=($HOME/.bashrc $HOME/.xinitrc $HOME/.Xresources $HOME/.vimrc $HOME/bin/colors2 $HOME/bin/notify $HOME/bin/system $HOME/bin/xmenu.sh $HOME/bin/gen $HOME/bin/install.sh $HOME/bin/rpg $HOME/bin/luminance.py $HOME/.conkyrc)
 
 BACKUPDIR=$HOME/dotfiles/
 
@@ -86,7 +86,8 @@ init () {
 
 # Preferred method of notification
 notify() {
-	notify-send "$@" || { echo "$@"; }
+#	notify-send "$@" || { echo "$@"; }
+	echo "$@"
 }
 err_log() {
 	[[ -e err.log ]] || touch err.log

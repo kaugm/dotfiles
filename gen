@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+main() {
+	case $1 in
+		usage|help|h|-h|?) echo "Usage: gen [webapp|html] [project name]"
+		echo"Generates base html css & js files required for webapp" ;;
+		webapp|html) 
+		mkdir -p $HOME/dev/$2
+
+		echo '<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Document</title>
+			<link rel="stylesheet" href="style.css" type="text/css">
+			<script src="app.js"></script>
+		</head>
+		<body>
+
+		</body>
+		</html>' > $HOME/dev/$2/index.html
+		touch $HOME/dev/$2/style.css
+		touch $HOME/dev/$2/app.js ;;
+	esac
+
+
+
+
+
+}
+
+main "$@"
