@@ -1,4 +1,5 @@
 let g:currentmode={ 'n' : 'Normal', 'no' : 'N·Operator Pending ', 'v' : 'Visual ', 'V' : 'V·Line ', '^V' : 'V·Block ', 's' : 'Select ', 'S': 'S·Line ', '^S' : 'S·Block ', 'i' : 'Insert ', 'R' : 'Replace ', 'Rv' : 'V·Replace ', 'c' : 'Command ', 'cv' : 'Vim Ex ', 'ce' : 'Ex ', 'r' : 'Prompt ', 'rm' : 'More ', 'r?' : 'Confirm ', '!' : 'Shell ', 't' : 'Terminal '}
+
 function! ModeCurrent() abort
     let l:modecurrent = mode()
     " use get() -> fails safely, since ^V doesn't seem to register
@@ -40,3 +41,4 @@ set statusline+=\ %{ModeCurrent()}
 
 set statusline+=%=
 set statusline+=\ %{strftime('%H:%M')}
+set statusline+=\ %Y

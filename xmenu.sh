@@ -22,13 +22,25 @@ Places
 	dev
 		calorie_counter		thunar ~/dev/calorie_counter
 		paomejiab.github.io		thunar ~/dev/paomejiab.github.io
+		portfolio_website		thunar ~/dev/portfolio_website
 	Downloads	thunar ~/Downloads
 	Pictures	thunar ~/Pictures
 System
+	Volume
+		-10%	$HOME/bin/vol.sh d
+		+10%	$HOME/bin/vol.sh u
+		Set 0%		$HOME/bin/vol.sh d 0%
+		Set 25%		$HOME/bin/vol.sh s 25%
+		Set 50%		$HOME/bin/vol.sh s 50%
+		Set 75%		$HOME/bin/vol.sh s 75%
+		Set 100%	$HOME/bin/vol.sh s 100%
+	Connect
+		Wifi		$HOME/bin/wifi.sh ecuafi
+		SSH Samba		urxvt -e ssh pi@192.168.1.250
 	Backup		$HOME/bin/system backup
 	Copy to share		urxvt -e scp -r $HOME/dotfiles pi@192.168.1.250:/Shared/Backup/main/
-	SSH Samba		urxvt -e ssh pi@192.168.1.250
-	Color Picker	$HOME/bin/cselect
+	lxappearance	lxappearance
+	Screenshot		scrot -d 5
 	New dark theme		$HOME/bin/colors2 d
 	New light theme		$HOME/bin/colors2 l
 EOF

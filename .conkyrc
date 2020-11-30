@@ -33,7 +33,7 @@ conky.config = {
 	default_color = 'white',
     default_outline_color = 'white',
     default_shade_color = 'white',
-    draw_borders = false,
+    draw_borders = true,
     draw_graph_borders = true,
     draw_outline = false,
     draw_shades = false,
@@ -42,8 +42,8 @@ conky.config = {
     font = 'Ubuntu Mono:size=12',
     gap_x = 20,
     gap_y = 20,
-    minimum_height = 5,
-	minimum_width = 5,
+    minimum_height = 30,
+	minimum_width = 2560,
     net_avg_samples = 2,
     no_buffers = true,
     out_to_console = false,
@@ -52,6 +52,8 @@ conky.config = {
     own_window = false,
     own_window_class = 'Conky',
     own_window_type = 'desktop',
+    own_window_transparent = false,
+    own_window_colour = '#000000',
     stippled_borders = 0,
     update_interval = 1.0,
     uppercase = false,
@@ -61,8 +63,5 @@ conky.config = {
 }
 
 conky.text = [[
-${execpi 60 /home/karl/bin/luminance.py}${time %H:%M}
-${time %a %d %B}
-RAM Usage: $memperc%
-${execpi 60 /home/karl/bin/net.sh}
+${execpi 60 /home/karl/bin/luminance.py}${time %H:%M} ${execpi 60 /home/karl/bin/net.sh}
 ]]

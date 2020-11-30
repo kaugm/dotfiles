@@ -80,6 +80,7 @@ esac
 # Alias
 
 alias restart='sudo shutdown -r now'
+alias shutdown='sudo shutdown now'
 
 # Directory stuff
 alias ..='cd ..'
