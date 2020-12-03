@@ -1,10 +1,9 @@
 ! Fonts
 URxvt.font: xft:Ubuntu Mono:style=Regular:size=12.5:antialias=true
-URxvt.boldFont:
-XTerm.font:xft:hlv:pixelsize=11:antialias=True,xft:JackeyFont:pixelsize=11:antialias=True
-XTerm.boldFont:
+xterm*.font:xft:Ubuntu Mono:style=Regular:size=12.5:antialias=true
 
 URxvt.internalBorder: 128
+xterm*.internalBorder: 128
 
 ! General
 *.scrollBar: false
@@ -37,11 +36,6 @@ emacs.internalBorder: 0
 *.color254:     #191921
 *.color255:     #eeeeee
 
-! Colors
-*.borderColor:  #191921
-*.background:	#191921
-*.foreground:   #eeeeee
-*.cursorColor:  #eeeeee
 
 ! Black
 *color0:       #4b4b4b

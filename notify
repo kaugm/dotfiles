@@ -7,7 +7,7 @@ case $1 in
 		notify-send "NC Coronavirus Update" "$covid" ;;
 	date) 
 		date=$(date "+%d %b %H:%M")
-		notify-send "It is currently" "$date" ;;
+		notify-send "It is currently $date" ;;
 	weather)
 		current=$(curl -s wttr.in/Raleigh\?format\="%t%20%20%C%20"\&m)
 		notify-send "Current weather in Raleigh" "$current" ;;

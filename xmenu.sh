@@ -20,11 +20,13 @@ Places
 	home	thunar ~
 	bin		thunar ~/bin
 	dev
-		calorie_counter		thunar ~/dev/calorie_counter
+		macro-counter		thunar ~/dev/macro-counter
 		paomejiab.github.io		thunar ~/dev/paomejiab.github.io
 		portfolio_website		thunar ~/dev/portfolio_website
 	Downloads	thunar ~/Downloads
 	Pictures	thunar ~/Pictures
+Development
+	macro-counter 	npm start $HOME/dev/macro-counter/
 System
 	Volume
 		-10%	$HOME/bin/vol.sh d
@@ -37,6 +39,7 @@ System
 	Connect
 		Wifi		$HOME/bin/wifi.sh ecuafi
 		SSH Samba		urxvt -e ssh pi@192.168.1.250
+	Color Picker	xmcp | xsel -b
 	Backup		$HOME/bin/system backup
 	Copy to share		urxvt -e scp -r $HOME/dotfiles pi@192.168.1.250:/Shared/Backup/main/
 	lxappearance	lxappearance

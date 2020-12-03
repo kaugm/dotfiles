@@ -61,7 +61,7 @@ fi
 
 # other prompt characters: ➜››
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\w  ➜\[\033[00m\] '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[34m\]\w  ➜\[\033[00m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -199,7 +199,7 @@ system() {
 	esac
 }
 
-gclo() {
+clone() {
 	if [ $# -lt 2 ]; then
 		printf '%s\n' "Usage: gclo [username] [repository]"
 		exit 1
@@ -228,6 +228,11 @@ connect() {
 		*) host=$2 ;;
 	esac
 	ssh $1@$host
+}
+
+run() {
+	cmd=$(history | grep $1 | head -n 1 | cut -d " " -f 3-)
+	$cmd
 }
 
 

@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-XNOTIFY_FIFO="$HOME/.cache/xnotify$DISPLAY.fifo"
-export XNOTIFY_FIFO
-rm -f $XNOTIFY_FIFO
-mkfifo $XNOTIFY_FIFO
-xnotify -g -15+15 0<>$XNOTIFY_FIFO &
-
+xset +fp /home/karl/.fonts
+xset fp rehash
 
 # Others: Wallpaper, conky, & wm
 xsetroot -cursor_name left_ptr &
