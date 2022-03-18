@@ -1,10 +1,15 @@
-
+autoload -Uz compinit
+compinit
 
 # Prompts
-PS1='%~ ➜ '
+PS1='%3~ ➜ '
 
 
 # Aliases
+
+alias tf='terraform'
+alias k='kubectl'
+alias e='eksctl'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -20,6 +25,7 @@ lp () {
 lt () {
 	ls -lAp | awk '{print $6, $7, $8, $9}'
 }
+alias cls='clear && ls'
 
 alias size='du -h | grep -v "./\\."'
 
@@ -53,7 +59,8 @@ search() {
 			echo "Navigate to directory by number? "
 			read choice
 			cd ${dirs[$choice]}
-
+		else
+			cd ${dirs[1]}
 	
 		fi ;;
 		proc) ps aux | grep $2 ;;
@@ -68,6 +75,12 @@ create() {
 	chmod u+x -- "$1" &&
 	echo "#!/usr/bin/env bash" >> "$1" &&
 	vim -- "$1"
+}
+
+mkcd ()
+{
+    mkdir -p -- "$1" &&
+       cd -P -- "$1"
 }
 
 clone() {
@@ -91,12 +104,15 @@ docker() {
 
 status() {
 	case $1 in
-		cluster) while true; do
-			aws eks describe-cluster --name $2 --query cluster.status
-			sleep 10
-		done 
-		echo "Cluster created" ;;
+		cluster) 
+			while true; do
+				aws eks describe-cluster --name $2 --query cluster.status
+				sleep 10
+			done  ;;
 		*) echo "usage: status [ cluster ] [ cluster name ]" ;;
 	esac
 
 }
+
+
+[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
