@@ -7,31 +7,53 @@ PS1='%3~ ➜ '
 
 # Aliases
 
+# DevOps Tools
 alias tf='terraform'
 alias k='kubectl'
 alias e='eksctl'
 
+watch() {
+	case $1 in
+		pods) k get pods --watch ;;
+		nodes) k get nodes --watch ;;
+	esac
+}
+
+alias filter='~/bin/filter.py'
+
+# Directory Navigation
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias .....='cd ../../../../..'
 
+# Viewing Files
 alias la='ls -a'
-alias ll='ls -l'
+alias ll='ls -GFhal'
 lp () {
 	ls -lAp | awk '{print $1, $9}'
 }
 lt () {
 	ls -lAp | awk '{print $6, $7, $8, $9}'
 }
+
+# Misc
 alias cls='clear && ls'
+alias cla='clear && la'
 
 alias size='du -h | grep -v "./\\."'
 
 alias x='exit'
 alias c='clear'
 
+alias h='history'
+alias he='cat ~/.zsh_eternal_history | perl -e "while (<>) { s/.{16}//; print $_ }" | uniq'
+
+alias python3='clear && python3'
+
+
+# Advanced Functions
 search() {
 	case $1 in
 		file) count=1
@@ -115,4 +137,16 @@ status() {
 }
 
 
+# History Augmentations
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1000000
+export HISTFILESIZE=1000000
+
+setopt INC_APPEND_HISTORY
+export HISTTIMEFORMAT="[%F %T] "
+
+setopt EXTENDED_HISTORY
+
+
+# kubectl Autocompletion
 [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
