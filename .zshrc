@@ -4,22 +4,42 @@ compinit
 # Prompts
 PS1='%3~ ➜ '
 
-
 # Aliases
 
 # DevOps Tools
 alias tf='terraform'
-alias k='kubectl'
 alias e='eksctl'
+
+# Kubernetes Shortcuts
+alias k='kubectl'
+export do="--dry-run=client -o yaml"
+
+# kubectl Autocompletion
+[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
 
 watch() {
 	case $1 in
-		pods) k get pods --watch ;;
-		nodes) k get nodes --watch ;;
+		po | pod | pods) k get pods -A -o wide --watch ;;
+		no | nod | node | nodes) k get nodes --watch ;;
 	esac
 }
 
+# Personal scripts in ~/bin
 alias filter='~/bin/filter.py'
+alias subnet='~/bin/personal/subnet.py'
+#alias backup='~/bin/backup.py'
+
+check() {
+	case $1 in
+		policy) ~/bin/policy.py $@ ;;
+		cluster) while true; do
+					aws eks describe-cluster --name $2 --query cluster.status
+					sleep 10
+				done ;;
+		*) echo "Usage: \ncheck policy [ eco | spot ] <policy>\ncheck status <eks cluster name>\n" ;;
+	esac
+}
+
 
 # Directory Navigation
 alias ..='cd ..'
@@ -48,16 +68,17 @@ alias x='exit'
 alias c='clear'
 
 alias h='history'
-alias he='cat ~/.zsh_eternal_history | perl -e "while (<>) { s/.{16}//; print $_ }" | uniq'
 
+# Python Shortcuts
 alias python3='clear && python3'
+alias python='clear && python3'
 
 
 # Advanced Functions
 search() {
 	case $1 in
 		file) count=1
-		local files=($(find . -name $2))
+		local files=($(find ~/Documents/ -name $2))
 		if [ ${#files[@]} -gt 1 ]; then
 			for file in ${files[@]}; do
 				echo "$count. $file"
@@ -72,7 +93,7 @@ search() {
 			ls
 		fi ;;
 		dir) count=1
-		local dirs=($(find . -type d -name $2 | sort -t '\0' -n 2>&1))
+		local dirs=($(find ~/Documents/ -type d -name $2 | sort -t '\0' -n 2>&1))
 		if [ ${#dirs[@]} -gt 1 ]; then
 			for dir in ${dirs[@]}; do
 				echo "$count. $dir"
@@ -85,8 +106,8 @@ search() {
 			cd ${dirs[1]}
 	
 		fi ;;
-		proc) ps aux | grep $2 ;;
-		*) echo "usage: search [ file | dir | proc ] [ argument ]"
+		org) ~/bin/orgs/search.py "${@:2}" ;;
+		*) echo "usage: search [ file | dir | org ] [ argument(s) ]"
 	esac
 
 
@@ -124,19 +145,6 @@ docker() {
 }
 
 
-status() {
-	case $1 in
-		cluster) 
-			while true; do
-				aws eks describe-cluster --name $2 --query cluster.status
-				sleep 10
-			done  ;;
-		*) echo "usage: status [ cluster ] [ cluster name ]" ;;
-	esac
-
-}
-
-
 # History Augmentations
 export HISTFILE=~/.zsh_history
 export HISTSIZE=1000000
@@ -146,7 +154,3 @@ setopt INC_APPEND_HISTORY
 export HISTTIMEFORMAT="[%F %T] "
 
 setopt EXTENDED_HISTORY
-
-
-# kubectl Autocompletion
-[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
